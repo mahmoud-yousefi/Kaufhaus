@@ -5,8 +5,11 @@ import { motion } from 'framer-motion'
 import { ArrowRight, Truck, Shield, RefreshCw, Leaf, Star } from 'lucide-react'
 import { products } from '../data/products'
 import { topLevelCategories } from '../data/categories'
-import ProductCard from '../components/product/ProductCard'
+import ProductCarousel from '../components/product/ProductCarousel'
 import Reveal from '../components/common/Reveal'
+import HeroSlider from '../components/common/HeroSlider'
+import DealBanner from '../components/common/DealBanner'
+import MarqueeStrip from '../components/common/MarqueeStrip'
 
 export default function Home() {
   const { t, i18n } = useTranslation()
@@ -33,69 +36,15 @@ export default function Home() {
           {link && <Link to={link} className="text-sm text-brand-700 flex items-center gap-1 hover:gap-2 transition-all">{t('common.showAll')} <ArrowRight size={16} /></Link>}
         </div>
       </Reveal>
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        {items.map((p, i) => (
-          <Reveal key={p.id} delay={i * 0.05}>
-            <ProductCard product={p} />
-          </Reveal>
-        ))}
-      </div>
+      <ProductCarousel items={items} />
     </section>
   )
 
   return (
     <div>
-      {/* Hero */}
-      <section className="relative overflow-hidden bg-brand-900 text-white min-h-[70vh] flex items-center">
-        <motion.div
-          className="absolute inset-0"
-          initial={{ scale: 1.1 }}
-          animate={{ scale: 1 }}
-          transition={{ duration: 1.4, ease: 'easeOut' }}
-        >
-          <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?w=1800" alt="" className="w-full h-full object-cover opacity-40" />
-        </motion.div>
-        <div className="absolute inset-0 bg-gradient-to-r from-brand-900/90 via-brand-900/60 to-transparent" />
-        <div className="relative max-w-7xl mx-auto px-4 py-20 grid md:grid-cols-2 gap-8 items-center w-full">
-          <motion.div
-            initial={{ opacity: 0, x: -40 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-          >
-            <div className="inline-block px-3 py-1 bg-accent-500/20 text-accent-500 rounded-full text-sm font-medium mb-4">Neu: Frische Lieferung in 2h</div>
-            <h1 className="font-display text-5xl md:text-7xl leading-[1.05] mb-5">
-              {t('common.homeHeroTitle')}
-            </h1>
-            <p className="text-lg text-white/80 mb-8 max-w-lg">{t('common.homeHeroSubtitle')}</p>
-            <div className="flex gap-3 flex-wrap">
-              <Link to="/shop" className="px-7 py-3.5 bg-white text-brand-900 rounded-full font-medium hover:bg-gray-100 transition shadow-lg">{t('common.shopNow')}</Link>
-              <Link to="/offers" className="px-7 py-3.5 border border-white/40 rounded-full font-medium hover:bg-white/10 transition">{t('nav.offers')}</Link>
-            </div>
-            <div className="mt-8 flex items-center gap-6 text-sm text-white/70">
-              <div className="flex items-center gap-2"><Star size={16} className="fill-amber-400 text-amber-400" /> 4.8/5 Kundenzufriedenheit</div>
-              <div>150+ Produkte</div>
-            </div>
-          </motion.div>
-          <motion.div
-            className="hidden md:grid grid-cols-2 gap-4"
-            initial={{ opacity: 0, x: 40 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-          >
-            {products.slice(0,4).map((p, i) => (
-              <motion.div
-                key={p.id}
-                whileHover={{ y: -6, scale: 1.02 }}
-                className="bg-white/10 backdrop-blur rounded-2xl p-3"
-              >
-                <img src={p.image} alt="" className="w-full h-32 object-cover rounded-xl mb-2" />
-                <div className="text-sm font-medium line-clamp-1">{p.name[lang]}</div>
-                <div className="text-accent-500 text-sm">{/* price */}</div>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
-      </section>
+      <HeroSlider />
+
+      <MarqueeStrip />
 
       {/* Benefits */}
       <section className="bg-white border-y border-gray-100">
@@ -138,8 +87,9 @@ export default function Home() {
         </div>
       </section>
 
-      <Section title={t('common.weeklyOffers')} items={offers.length ? offers : bestsellers} link="/offers" subtitle="Sparen Sie bis zu 30% bei ausgewählten Produkten" />
-      <Section title={t('common.bestsellers')} items={bestsellers} link="/shop" subtitle="Die beliebtesten Produkte unserer Kunden" />
+      <DealBanner />
+      <Section title={t('common.weeklyOffers')} items={offers.length ? offers : bestsellers} link="/offers" subtitle={t('common.saveUpTo')} />
+      <Section title={t('common.bestsellers')} items={bestsellers} link="/shop" subtitle={t('common.mostPopular')} />
 
       {/* Editorial banner */}
       <section className="max-w-7xl mx-auto px-4 py-10">
@@ -148,8 +98,8 @@ export default function Home() {
             <div className="grid md:grid-cols-2">
               <div className="p-8 md:p-12 flex flex-col justify-center">
                 <div className="text-sm text-brand-600 font-medium mb-2">{t('common.editorialTitle')}</div>
-                <h3 className="font-display text-2xl md:text-3xl text-brand-900 mb-3">Bio & Regional aus Ihrer Region</h3>
-                <p className="text-gray-700 mb-6">Entdecken Sie unsere kuratierte Auswahl an Bio- und Regionalprodukten — frisch, nachhaltig und mit Herkunftsgarantie.</p>
+                <h3 className="font-display text-2xl md:text-3xl text-brand-900 mb-3">{t('common.bioRegionalTitle')}</h3>
+                <p className="text-gray-700 mb-6">{t('common.bioRegionalText')}</p>
                 <Link to="/category/bio-produkte" className="self-start px-6 py-3 bg-brand-900 text-white rounded-full text-sm font-medium hover:bg-brand-700 transition">{t('common.shopNow')}</Link>
               </div>
               <motion.div className="h-64 md:h-auto overflow-hidden" whileHover={{ scale: 1.03 }} transition={{ duration: 0.6 }}>
@@ -195,9 +145,9 @@ export default function Home() {
         </Reveal>
         <div className="grid md:grid-cols-3 gap-4">
           {[
-            { name: 'Anna M.', text: 'Frische Produkte, schnelle Lieferung. Mein neuer Lieblingsmarkt!', rating: 5 },
-            { name: 'Thomas K.', text: 'Große Auswahl und faire Preise. Sehr empfehlenswert.', rating: 5 },
-            { name: 'Sarah L.', text: 'Der Kundenservice ist top. Kaufhaus ist zuverlässig.', rating: 4 },
+            { name: 'Anna M.', text: t('common.testimonial1'), rating: 5 },
+            { name: 'Thomas K.', text: t('common.testimonial2'), rating: 5 },
+            { name: 'Sarah L.', text: t('common.testimonial3'), rating: 4 },
           ].map((tst, i) => (
             <Reveal key={i} delay={i * 0.1}>
               <motion.div whileHover={{ y: -4 }} className="bg-white rounded-2xl p-6 shadow-card">

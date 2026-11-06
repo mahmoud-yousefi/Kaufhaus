@@ -1,3 +1,5 @@
+import { productsMore } from './productsMore'
+
 export interface Product {
   id: string
   slug: string
@@ -17,7 +19,7 @@ export interface Product {
   badges: string[]
 }
 
-export const products: Product[] = [
+const baseProducts: Product[] = [
   {"id":"p001","slug":"bio-äpfel-elstar-p001","name":{"de":"Bio Äpfel Elstar","en":"Organic Elstar Apples"},"description":{"de":"Bio Äpfel Elstar von Kaufhaus Bio. Hochwertige Qualität, sorgfältig ausgewählt. Inhalt: 1 kg.","en":"Organic Elstar Apples by Kaufhaus Bio. Premium quality, carefully selected. Contents: 1 kg."},"brand":"Kaufhaus Bio","category":"produce","price":3.99,"unit":"1 kg","image":"https://picsum.photos/seed/p001/600/600","rating":4.6,"reviewCount":197,"stock":106,"badges":["bio","regional"]},
   {"id":"p002","slug":"bananen-p002","name":{"de":"Bananen","en":"Bananas"},"description":{"de":"Bananen von Chiquita. Hochwertige Qualität, sorgfältig ausgewählt. Inhalt: 1 kg.","en":"Bananas by Chiquita. Premium quality, carefully selected. Contents: 1 kg."},"brand":"Chiquita","category":"produce","price":1.89,"unit":"1 kg","image":"https://picsum.photos/seed/p002/600/600","rating":4,"reviewCount":34,"stock":33,"badges":[]},
   {"id":"p003","slug":"tomaten-rispe-p003","name":{"de":"Tomaten Rispe","en":"Vine Tomatoes"},"description":{"de":"Tomaten Rispe von SanLucar. Hochwertige Qualität, sorgfältig ausgewählt. Inhalt: 500 g.","en":"Vine Tomatoes by SanLucar. Premium quality, carefully selected. Contents: 500 g."},"brand":"SanLucar","category":"produce","price":2.49,"unit":"500 g","image":"https://picsum.photos/seed/p003/600/600","rating":5,"reviewCount":198,"stock":12,"badges":["regional"],"originalPrice":3.31},
@@ -171,6 +173,13 @@ export const products: Product[] = [
   {"id":"p151","slug":"adventskalender-p151","name":{"de":"Adventskalender","en":"Advent Calendar"},"description":{"de":"Adventskalender von Lindt. Hochwertige Qualität, sorgfältig ausgewählt. Inhalt: 1 Stk.","en":"Advent Calendar by Lindt. Premium quality, carefully selected. Contents: 1 Stk."},"brand":"Lindt","category":"seasonal","price":9.99,"unit":"1 Stk","image":"https://picsum.photos/seed/p151/600/600","rating":4.9,"reviewCount":135,"stock":58,"badges":[],"originalPrice":12.97},
   {"id":"p152","slug":"osterhase-p152","name":{"de":"Osterhase","en":"Easter Bunny"},"description":{"de":"Osterhase von Lindt. Hochwertige Qualität, sorgfältig ausgewählt. Inhalt: 1 Stk.","en":"Easter Bunny by Lindt. Premium quality, carefully selected. Contents: 1 Stk."},"brand":"Lindt","category":"seasonal","price":3.99,"unit":"1 Stk","image":"https://picsum.photos/seed/p152/600/600","rating":4.2,"reviewCount":37,"stock":26,"badges":[]}
 ];
+
+const merged: Product[] = [...baseProducts, ...productsMore].map((p, i) => {
+  if (p.originalPrice || i % 6 !== 0) return p
+  return { ...p, originalPrice: Math.round(p.price * (1.15 + (i % 5) * 0.05) * 100) / 100 }
+})
+
+export const products: Product[] = merged
 
 export function getProductBySlug(slug: string) { return products.find(p => p.slug === slug) }
 export function getProductById(id: string) { return products.find(p => p.id === id) }

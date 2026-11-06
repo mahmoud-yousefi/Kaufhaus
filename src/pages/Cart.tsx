@@ -24,8 +24,8 @@ export default function Cart() {
   const total = Math.max(0, subtotal + shipping - discount)
 
   const applyPromo = () => {
-    if (cart.applyPromo(promo)) { toast.success('Gutschein angewendet'); setPromo('') }
-    else toast.error('Ungültiger Gutscheincode')
+    if (cart.applyPromo(promo)) { toast.success(t('common.promoApplied')); setPromo('') }
+    else toast.error(t('common.invalidPromo'))
   }
 
   if (items.length === 0) {
@@ -78,10 +78,10 @@ export default function Cart() {
           {cart.promoCode && (
             <div className="mt-2 text-xs text-green-700 flex justify-between">
               <span>{cart.promoCode}</span>
-              <button onClick={cart.removePromo} className="underline">entfernen</button>
+              <button onClick={cart.removePromo} className="underline">{t('common.remove')}</button>
             </div>
           )}
-          <button onClick={() => toast.success('Simulierte Kasse — keine echte Transaktion')} className="mt-4 w-full py-3 bg-brand-900 text-white rounded-full font-medium hover:bg-brand-700 transition">
+          <button onClick={() => toast.success(t('common.simulatedCheckout'))} className="mt-4 w-full py-3 bg-brand-900 text-white rounded-full font-medium hover:bg-brand-700 transition">
             {t('common.checkout')}
           </button>
           <Link to="/shop" className="block text-center mt-3 text-sm text-brand-700">{t('common.continueShopping')}</Link>

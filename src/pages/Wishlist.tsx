@@ -29,7 +29,7 @@ export default function Wishlist() {
     <div className="max-w-7xl mx-auto px-4 py-6">
       <div className="flex items-center justify-between mb-6">
         <h1 className="font-display text-3xl text-brand-900">{t('nav.wishlist')}</h1>
-        <button onClick={() => { wl.clear(); toast.success('Merkliste geleert') }} className="text-sm text-red-600">Alle entfernen</button>
+        <button onClick={() => { wl.clear(); toast.success(t('common.emptyWishlist')) }} className="text-sm text-red-600">{t('common.allRemove')}</button>
       </div>
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {items.map(p => <ProductCard key={p.id} product={p} />)}

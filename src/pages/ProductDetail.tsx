@@ -9,6 +9,7 @@ import { useCartStore } from '../store/cartStore'
 import { useWishlistStore } from '../store/wishlistStore'
 import ProductCard from '../components/product/ProductCard'
 import Badge from '../components/ui/Badge'
+import { toast } from 'sonner'
 
 export default function ProductDetail() {
   const { slug } = useParams()
@@ -93,19 +94,19 @@ export default function ProductDetail() {
               <button onClick={() => setQty(qty + 1)} className="px-4 py-2 text-lg">+</button>
             </div>
             <button
-              onClick={() => { for (let i = 0; i < qty; i++) cart.addItem(product.id); setQty(1) }}
+              onClick={() => { for (let i = 0; i < qty; i++) cart.addItem(product.id); setQty(1); toast.success(t('common.addedToCart')) }}
               disabled={product.stock === 0}
               className="flex-1 py-3 bg-brand-900 text-white rounded-full font-medium hover:bg-brand-700 transition flex items-center justify-center gap-2 disabled:bg-gray-300"
             >
               <ShoppingCart size={18} /> {t('common.addToCart')}
             </button>
-            <button onClick={() => wl.toggle(product.id)} className="w-12 h-12 rounded-full border flex items-center justify-center hover:bg-gray-50">
+            <button onClick={() => { wl.toggle(product.id); toast.success(wl.has(product.id) ? t('common.removedFromWishlist') : t('common.addedToWishlist')) }} className="w-12 h-12 rounded-full border flex items-center justify-center hover:bg-gray-50">
               <Heart size={18} className={liked ? 'fill-red-500 text-red-500' : ''} />
             </button>
           </div>
           <div className="border-t pt-4 space-y-2 text-sm text-gray-600">
-            <div className="flex items-center gap-2"><Truck size={16} /> {t('common.delivery')}: 1-3 Werktage</div>
-            <div className="flex items-center gap-2"><RotateCcw size={16} /> {t('common.returns')}: 30 Tage</div>
+            <div className="flex items-center gap-2"><Truck size={16} /> {t('common.delivery')}: {t('common.deliveryTime')}</div>
+            <div className="flex items-center gap-2"><RotateCcw size={16} /> {t('common.returns')}: {t('common.returnDays')}</div>
           </div>
         </div>
       </div>
@@ -116,9 +117,9 @@ export default function ProductDetail() {
         <p className="text-gray-700 mb-6">{product.description[lang]}</p>
         <h3 className="font-semibold mb-2">{t('common.attributes')}</h3>
         <div className="grid grid-cols-2 md:grid-cols-3 gap-3 text-sm">
-          <div className="flex justify-between border-b py-2"><span className="text-gray-500">Marke</span><span>{product.brand}</span></div>
-          <div className="flex justify-between border-b py-2"><span className="text-gray-500">Einheit</span><span>{product.unit}</span></div>
-          <div className="flex justify-between border-b py-2"><span className="text-gray-500">Bewertung</span><span>{product.rating.toFixed(1)}</span></div>
+          <div className="flex justify-between border-b py-2"><span className="text-gray-500">{t('common.attrBrand')}</span><span>{product.brand}</span></div>
+          <div className="flex justify-between border-b py-2"><span className="text-gray-500">{t('common.attrUnit')}</span><span>{product.unit}</span></div>
+          <div className="flex justify-between border-b py-2"><span className="text-gray-500">{t('common.attrRating')}</span><span>{product.rating.toFixed(1)}</span></div>
         </div>
       </section>
 
@@ -127,8 +128,8 @@ export default function ProductDetail() {
         <h2 className="font-semibold mb-4">{t('common.reviewsTitle')}</h2>
         <div className="space-y-4">
           {[
-            { name: 'Anna M.', rating: 5, text: 'Sehr gute Qualität, schnelle Lieferung. Immer wieder!' },
-            { name: 'Thomas K.', rating: 4, text: 'Gutes Preis-Leistungs-Verhältnis.' },
+            { name: 'Anna M.', rating: 5, text: t('common.review1') },
+            { name: 'Thomas K.', rating: 4, text: t('common.review2') },
           ].map((r, i) => (
             <div key={i} className="border-b pb-4 last:border-0">
               <div className="flex items-center gap-2 mb-1">

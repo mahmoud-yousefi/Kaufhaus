@@ -8,6 +8,7 @@ import { formatPrice, discountPercent } from '../../lib/utils'
 import { useCartStore } from '../../store/cartStore'
 import { useWishlistStore } from '../../store/wishlistStore'
 import Badge from '../ui/Badge'
+import { toast } from 'sonner'
 
 const badgeMap: Record<string, string> = {
   bio: 'bio', vegan: 'vegan', regional: 'regional', glutenfrei: 'glutenFree', laktosefrei: 'lactoseFree', neu: 'new', angebot: 'sale',
@@ -38,7 +39,7 @@ export default function ProductCard({ product, compact = false }: { product: Pro
           )}
         </div>
         <button
-          onClick={(e) => { e.preventDefault(); wl.toggle(product.id) }}
+          onClick={(e) => { e.preventDefault(); wl.toggle(product.id); toast.success(wl.has(product.id) ? t('common.removedFromWishlist') : t('common.addedToWishlist')) }}
           className="absolute top-3 right-3 w-9 h-9 rounded-full bg-white/90 backdrop-blur flex items-center justify-center shadow hover:scale-110 transition"
           aria-label="wishlist"
         >
@@ -67,7 +68,7 @@ export default function ProductCard({ product, compact = false }: { product: Pro
             <div className="text-xs text-gray-500">{product.unit}</div>
           </div>
           <button
-            onClick={() => cart.addItem(product.id)}
+            onClick={() => { cart.addItem(product.id); toast.success(t('common.addedToCart')) }}
             disabled={product.stock === 0}
             className="w-10 h-10 rounded-full bg-brand-900 text-white flex items-center justify-center hover:bg-brand-700 transition disabled:bg-gray-300"
             aria-label={t('common.addToCart')}

@@ -2,6 +2,7 @@ import { lazy, Suspense } from 'react'
 import { Routes, Route, useLocation } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
 import Layout from './components/layout/Layout'
+import BrandLoader from './components/common/BrandLoader'
 import { Toaster } from 'sonner'
 
 const Home = lazy(() => import('./pages/Home'))
@@ -20,7 +21,7 @@ const Legal = lazy(() => import('./pages/Legal'))
 const Offers = lazy(() => import('./pages/Offers'))
 
 function Fallback() {
-  return <div className="max-w-7xl mx-auto px-4 py-20 text-center text-gray-400">Lädt…</div>
+  return <BrandLoader />
 }
 
 export default function App() {

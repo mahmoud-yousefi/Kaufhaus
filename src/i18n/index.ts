@@ -12,4 +12,9 @@ i18n.use(initReactI18next).init({
   interpolation: { escapeValue: false },
 })
 
+i18n.on('languageChanged', (lng) => {
+  if (typeof document !== 'undefined') document.documentElement.lang = lng
+  if (typeof localStorage !== 'undefined') localStorage.setItem('lang', lng)
+})
+
 export default i18n

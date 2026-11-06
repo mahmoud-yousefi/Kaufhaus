@@ -17,7 +17,7 @@ export default function BackToTop() {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 20 }}
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-          className="fixed bottom-6 right-6 z-40 w-11 h-11 rounded-full bg-brand-900 text-white shadow-lift flex items-center justify-center hover:bg-brand-700"
+          className="fixed bottom-20 right-4 z-40 md:bottom-6 md:right-6 w-11 h-11 rounded-full bg-brand-900 text-white shadow-lift flex items-center justify-center hover:bg-brand-700"
         >
           <ArrowUp size={18} />
         </motion.button>
