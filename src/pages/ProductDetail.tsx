@@ -38,7 +38,7 @@ export default function ProductDetail() {
         {/* Gallery */}
         <div>
           <div className="relative bg-gray-50 rounded-2xl overflow-hidden">
-            <img src={gallery[imgIdx]} alt={product.name[lang]} className="w-full h-[420px] object-cover" />
+            <img src={gallery[imgIdx]} alt={product.name[lang]} className="w-full h-[300px] sm:h-[420px] object-cover" />
             {gallery.length > 1 && (
               <>
                 <button onClick={() => setImgIdx((imgIdx - 1 + gallery.length) % gallery.length)} className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white shadow flex items-center justify-center"><ChevronLeft size={18} /></button>
@@ -58,8 +58,8 @@ export default function ProductDetail() {
         <div>
           <div className="text-sm text-gray-500 mb-1">{product.brand}</div>
           <h1 className="font-display text-3xl text-brand-900 mb-3">{product.name[lang]}</h1>
-          <div className="flex items-center gap-2 mb-4 text-sm">
-            <div className="flex items-center gap-1">
+          <div className="flex flex-wrap items-center gap-2 mb-4 text-sm">
+            <div className="flex items-center gap-1 shrink-0">
               {Array.from({ length: 5 }).map((_, i) => (
                 <Star key={i} size={14} className={i < Math.round(product.rating) ? 'fill-amber-400 text-amber-400' : 'text-gray-300'} />
               ))}
@@ -87,26 +87,28 @@ export default function ProductDetail() {
             )}
           </div>
           <p className="text-gray-700 mb-6 leading-relaxed">{product.description[lang]}</p>
-          <div className="flex items-center gap-3 mb-6">
-            <div className="flex items-center border rounded-full">
-              <button onClick={() => setQty(Math.max(1, qty - 1))} className="px-4 py-2 text-lg">−</button>
-              <span className="px-4 py-2 font-medium">{qty}</span>
-              <button onClick={() => setQty(qty + 1)} className="px-4 py-2 text-lg">+</button>
+          <div className="flex flex-col sm:flex-row sm:items-center gap-3 mb-6">
+            <div className="flex items-center gap-3">
+              <div className="flex items-center border rounded-full">
+                <button onClick={() => setQty(Math.max(1, qty - 1))} className="px-4 py-2 text-lg">−</button>
+                <span className="px-4 py-2 font-medium tabular-nums">{qty}</span>
+                <button onClick={() => setQty(qty + 1)} className="px-4 py-2 text-lg">+</button>
+              </div>
+              <button onClick={() => { wl.toggle(product.id); toast.success(wl.has(product.id) ? t('common.removedFromWishlist') : t('common.addedToWishlist')) }} className="w-12 h-12 rounded-full border flex items-center justify-center hover:bg-gray-50 shrink-0">
+                <Heart size={18} className={liked ? 'fill-red-500 text-red-500' : ''} />
+              </button>
             </div>
             <button
               onClick={() => { for (let i = 0; i < qty; i++) cart.addItem(product.id); setQty(1); toast.success(t('common.addedToCart')) }}
               disabled={product.stock === 0}
-              className="flex-1 py-3 bg-brand-900 text-white rounded-full font-medium hover:bg-brand-700 transition flex items-center justify-center gap-2 disabled:bg-gray-300"
+              className="flex-1 py-3 bg-brand-900 text-white rounded-full font-medium hover:bg-brand-700 transition flex items-center justify-center gap-2 disabled:bg-gray-300 whitespace-nowrap"
             >
-              <ShoppingCart size={18} /> {t('common.addToCart')}
-            </button>
-            <button onClick={() => { wl.toggle(product.id); toast.success(wl.has(product.id) ? t('common.removedFromWishlist') : t('common.addedToWishlist')) }} className="w-12 h-12 rounded-full border flex items-center justify-center hover:bg-gray-50">
-              <Heart size={18} className={liked ? 'fill-red-500 text-red-500' : ''} />
+              <ShoppingCart size={18} className="shrink-0" /> <span>{t('common.addToCart')}</span>
             </button>
           </div>
           <div className="border-t pt-4 space-y-2 text-sm text-gray-600">
-            <div className="flex items-center gap-2"><Truck size={16} /> {t('common.delivery')}: {t('common.deliveryTime')}</div>
-            <div className="flex items-center gap-2"><RotateCcw size={16} /> {t('common.returns')}: {t('common.returnDays')}</div>
+            <div className="flex items-start gap-2"><Truck size={16} className="shrink-0 mt-0.5" /> <span>{t('common.delivery')}: {t('common.deliveryTime')}</span></div>
+            <div className="flex items-start gap-2"><RotateCcw size={16} className="shrink-0 mt-0.5" /> <span>{t('common.returns')}: {t('common.returnDays')}</span></div>
           </div>
         </div>
       </div>

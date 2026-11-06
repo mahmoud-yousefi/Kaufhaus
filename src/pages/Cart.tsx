@@ -44,15 +44,15 @@ export default function Cart() {
       <div className="grid md:grid-cols-[1fr_360px] gap-6">
         <div className="space-y-3">
           {items.map(i => (
-            <div key={i.productId} className="bg-white rounded-2xl p-4 shadow-card flex gap-4">
-              <img src={i.product.image} alt="" className="w-20 h-20 rounded-lg object-cover" />
+            <div key={i.productId} className="bg-white rounded-2xl p-4 shadow-card flex flex-col sm:flex-row gap-4">
+              <img src={i.product.image} alt="" className="w-20 h-20 rounded-lg object-cover shrink-0" />
               <div className="flex-1">
                 <Link to={`/product/${i.product.slug}`} className="font-medium hover:text-brand-700">{i.product.name[lang]}</Link>
                 <div className="text-sm text-gray-500">{i.product.brand} · {i.product.unit}</div>
                 <div className="text-brand-900 font-semibold mt-1">{formatPrice(i.product.price, lang)}</div>
               </div>
-              <div className="flex flex-col items-end gap-2">
-                <button onClick={() => cart.removeItem(i.productId)} className="text-gray-400 hover:text-red-500"><Trash2 size={16} /></button>
+              <div className="flex flex-row sm:flex-col items-center sm:items-end justify-between sm:justify-start gap-2">
+                <button onClick={() => cart.removeItem(i.productId)} className="text-gray-400 hover:text-red-500 shrink-0"><Trash2 size={16} /></button>
                 <div className="flex items-center border rounded-full">
                   <button onClick={() => cart.setQuantity(i.productId, i.quantity - 1)} className="px-3 py-1"><Minus size={14} /></button>
                   <span className="px-3 py-1">{i.quantity}</span>

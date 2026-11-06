@@ -40,6 +40,8 @@
     "sort": "Sort",
     "clearFilters": "Clear filters",
     "results": "results",
+    "curatedSelection": "Carefully selected products for you",
+    "loadingMore": "Loading more products…",
     "noResults": "No results found",
     "rating": "Rating",
     "reviews": "reviews",

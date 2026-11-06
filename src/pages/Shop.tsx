@@ -3,7 +3,7 @@ import { useSearchParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { Filter, X, Grid, List, Star, SlidersHorizontal } from 'lucide-react'
 import { products } from '../data/products'
-import { categories } from '../data/categories'
+import { categories, topLevelCategories } from '../data/categories'
 import ProductCard from '../components/product/ProductCard'
 
 type SortKey = 'recommended' | 'priceAsc' | 'priceDesc' | 'rating' | 'newest' | 'bestseller'
@@ -13,10 +13,12 @@ const PAGE = 24
 export default function Shop() {
   const { t, i18n } = useTranslation()
   const lang = i18n.language as 'de' | 'en'
+
   const [params, setParams] = useSearchParams()
   const [view, setView] = useState<'grid' | 'list'>('grid')
   const [mobileFilters, setMobileFilters] = useState(false)
   const [visible, setVisible] = useState(PAGE)
+  const sentinelRef = React.useRef<HTMLDivElement | null>(null)
 
   const categoryParam = params.get('category') || ''
   const sortParam = (params.get('sort') as SortKey) || 'recommended'
@@ -57,6 +59,18 @@ export default function Shop() {
     }
     return list
   }, [categoryParam, brandParam, badgeParam, ratingParam, minPrice, maxPrice, inStockOnly, sortParam])
+
+  useEffect(() => {
+    const el = sentinelRef.current
+    if (!el) return
+    const obs = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) {
+        setVisible(v => Math.min(v + PAGE, filtered.length))
+      }
+    }, { rootMargin: '400px' })
+    obs.observe(el)
+    return () => obs.disconnect()
+  }, [filtered.length])
 
   const brands = Array.from(new Set(products.map(p => p.brand))).sort()
   const allBadges = Array.from(new Set(products.flatMap(p => p.badges)))
@@ -140,10 +154,10 @@ export default function Shop() {
       <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
         <div>
           <h1 className="font-display text-2xl text-brand-900 md:text-3xl">{t('nav.shop')}</h1>
-          <p className="text-sm text-gray-500">{filtered.length} {t('common.results')}</p>
+          <p className="text-sm text-gray-500">{t('common.curatedSelection')}</p>
         </div>
         <div className="flex items-center gap-2">
-          <button className="flex items-center gap-2 rounded-full border border-gray-200 bg-white px-3 py-2 text-sm md:hidden" onClick={() => setMobileFilters(true)}>
+          <button className="flex items-center gap-2 rounded-full border border-gray-200 bg-white px-3 py-2 text-sm md:hidden whitespace-nowrap" onClick={() => setMobileFilters(true)}>
             <SlidersHorizontal size={15} /> {t('common.filter')}
           </button>
           <select value={sortParam} onChange={(e) => updateParam('sort', e.target.value)} className="rounded-full border border-gray-200 bg-white px-3 py-2 text-sm">
@@ -172,6 +186,12 @@ export default function Shop() {
         </div>
       )}
 
+      <div className="mb-4 flex gap-2 overflow-x-auto pb-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        <button onClick={() => updateParam('category', '')} className={`shrink-0 rounded-full px-4 py-2 text-sm font-medium transition ${!categoryParam ? 'bg-brand-900 text-white' : 'bg-white text-gray-700 shadow-card hover:bg-gray-50'}`}>{t('nav.allCategories')}</button>
+        {topLevelCategories.map(c => (
+          <button key={c.id} onClick={() => updateParam('category', c.id)} className={`shrink-0 rounded-full px-4 py-2 text-sm font-medium transition ${categoryParam === c.id ? 'bg-brand-900 text-white' : 'bg-white text-gray-700 shadow-card hover:bg-gray-50'}`}>{c.name[lang]}</button>
+        ))}
+      </div>
       <div className="grid gap-6 md:grid-cols-[260px_1fr]">
         <aside className="sticky top-24 hidden h-fit rounded-2xl bg-white p-5 shadow-card md:block">
           <div className="mb-4 flex items-center gap-2 font-display text-lg text-brand-900"><Filter size={16} /> {t('common.filter')}</div>
@@ -185,14 +205,16 @@ export default function Shop() {
               <div className={view === 'grid' ? 'grid grid-cols-2 gap-4 md:grid-cols-3 xl:grid-cols-4' : 'space-y-3'}>
                 {filtered.slice(0, visible).map(p => <ProductCard key={p.id} product={p} />)}
               </div>
+              <div ref={sentinelRef} className="h-10" />
               {visible < filtered.length && (
-                <div className="mt-8 flex flex-col items-center gap-2">
+                <div className="mt-2 flex flex-col items-center gap-2">
                   <div className="h-1 w-48 overflow-hidden rounded-full bg-gray-200">
                     <div className="h-full rounded-full bg-brand-900 transition-all" style={{ width: `${Math.min(100, (visible / filtered.length) * 100)}%` }} />
                   </div>
-                  <button onClick={() => setVisible(v => v + PAGE)} className="rounded-full bg-brand-900 px-7 py-3 text-sm font-medium text-white hover:bg-brand-700">
-                    {t('common.loadMore')} ({filtered.length - visible})
-                  </button>
+                  <div className="flex items-center gap-2 text-sm text-gray-500">
+                    <span className="h-4 w-4 animate-spin rounded-full border-2 border-gray-300 border-t-brand-900" />
+                    {t('common.loadingMore')}
+                  </div>
                 </div>
               )}
             </>

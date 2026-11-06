@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 
 const content: Record<string, { title: string; body: string }> = {
-  impressum: { title: 'Impressum', body: 'Platzhalter. Angaben gemäß § 5 TMG werden vor kommerzieller Nutzung ergänzt. Dieses Dokument ist ein Platzhalter und bedarf rechtlicher Prüfung.' },
+  impressum: { title: 'Impressum', body: 'Platzhalter. Angaben gemäß § 5 TMG werden vor kommerzieller Nutzung ergänzt. Dieses Dokument ist ein Platzhalter und bedarf rechtlicher Prüfung. Produkt- und Redaktionsbilder stammen teilweise von Wikimedia Commons (CC BY / CC BY-SA / Public Domain) und Unsplash; Lizenzen und Urheber werden auf Anfrage nachgewiesen.' },
   datenschutz: { title: 'Datenschutz', body: 'Platzhalter. Datenschutzerklärung gemäß DSGVO. Vor kommerzieller Nutzung rechtlich prüfen lassen.' },
   agb: { title: 'AGB', body: 'Platzhalter. Allgemeine Geschäftsbedingungen. Vor kommerzieller Nutzung rechtlich prüfen lassen.' },
   widerruf: { title: 'Widerrufsbelehrung', body: 'Platzhalter. Widerrufsbelehrung für Verbraucher. Vor kommerzieller Nutzung rechtlich prüfen lassen.' },

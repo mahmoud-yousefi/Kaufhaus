@@ -91,13 +91,13 @@ export default function Header() {
         </button>
 
         <Link to="/" className="flex shrink-0 items-center gap-2" aria-label="Kaufhaus Startseite">
-          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-brand-900 font-display text-lg text-white">K</div>
+          <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-brand-900 font-display text-base text-white sm:h-9 sm:w-9 sm:text-lg">K</div>
           <span className="hidden font-display text-xl font-semibold text-brand-900 sm:block">Kaufhaus</span>
         </Link>
 
         <div ref={searchRef} className="relative w-full max-w-2xl flex-1">
-          <div className="flex items-center rounded-full bg-gray-100 px-4 py-2 ring-1 ring-transparent transition focus-within:bg-white focus-within:ring-brand-300">
-            <Search size={18} className="text-gray-400" />
+          <div className="flex items-center rounded-full bg-gray-100 px-3 py-2 ring-1 ring-transparent transition focus-within:bg-white focus-within:ring-brand-300 sm:px-4">
+            <Search size={16} className="text-gray-400 sm:h-[18px] sm:w-[18px]" />
             <input
               value={query}
               onChange={(e) => { setQuery(e.target.value); setSearchOpen(true) }}
@@ -169,13 +169,13 @@ export default function Header() {
 
         <div className="flex items-center gap-0.5 sm:gap-1">
           <LanguageSwitcher />
-          <Link to="/wishlist" aria-label={t('nav.wishlist')} className="relative rounded-full p-2 hover:bg-gray-100">
-            <Heart size={20} />
-            {wlCount > 0 && <span className="absolute -right-0.5 -top-0.5 flex h-5 min-w-5 items-center justify-center rounded-full bg-red-500 px-1 text-xs text-white">{wlCount}</span>}
+          <Link to="/wishlist" aria-label={t('nav.wishlist')} className="relative rounded-full p-1.5 hover:bg-gray-100 sm:p-2">
+            <Heart size={18} className="sm:h-5 sm:w-5" />
+            {wlCount > 0 && <span className="absolute -right-0.5 -top-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-red-500 px-1 text-[10px] text-white sm:h-5 sm:min-w-5 sm:text-xs">{wlCount}</span>}
           </Link>
-          <Link to="/cart" aria-label={t('nav.cart')} className="relative rounded-full p-2 hover:bg-gray-100">
-            <ShoppingCart size={20} />
-            {cartCount > 0 && <span className="absolute -right-0.5 -top-0.5 flex h-5 min-w-5 items-center justify-center rounded-full bg-brand-900 px-1 text-xs text-white">{cartCount}</span>}
+          <Link to="/cart" aria-label={t('nav.cart')} className="relative rounded-full p-1.5 hover:bg-gray-100 sm:p-2">
+            <ShoppingCart size={18} className="sm:h-5 sm:w-5" />
+            {cartCount > 0 && <span className="absolute -right-0.5 -top-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-brand-900 px-1 text-[10px] text-white sm:h-5 sm:min-w-5 sm:text-xs">{cartCount}</span>}
           </Link>
         </div>
       </div>

@@ -51,13 +51,13 @@ export default function Search() {
           aria-label={t('nav.search')}
           className="min-w-0 flex-1 bg-transparent px-3 py-1.5 text-sm outline-none"
         />
-        <button className="rounded-full bg-brand-900 px-5 py-2 text-sm font-medium text-white hover:bg-brand-700">{t('nav.search')}</button>
+        <button className="shrink-0 rounded-full bg-brand-900 px-5 py-2 text-sm font-medium text-white hover:bg-brand-700 whitespace-nowrap">{t('nav.search')}</button>
       </form>
 
       {q ? (
         <>
           <h1 className="font-display text-2xl text-brand-900 mb-2">{t('nav.search')}: "{q}"</h1>
-          <p className="mb-6 text-sm text-gray-500">{results.length} {t('common.results')}</p>
+          <p className="mb-6 text-sm text-gray-500">{t('common.curatedSelection')}</p>
           {catResults.length > 0 && (
             <div className="mb-6">
               <h2 className="mb-2 font-semibold">{t('common.searchCategories')}</h2>

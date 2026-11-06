@@ -55,7 +55,7 @@ export default function ProductCard({ product, compact = false }: { product: Pro
           <p className="text-xs text-gray-500 mt-1 line-clamp-2">{product.description[lang]}</p>
         )}
         <div className="flex items-center gap-1 mt-2 text-xs text-gray-500">
-          <Star size={12} className="fill-amber-400 text-amber-400" />
+          <Star size={12} className="fill-amber-400 text-amber-400 shrink-0" />
           <span>{product.rating.toFixed(1)}</span>
           <span>({product.reviewCount})</span>
         </div>

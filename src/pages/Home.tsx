@@ -46,6 +46,18 @@ export default function Home() {
 
       <MarqueeStrip />
 
+      {/* Category shortcuts tape */}
+      <section className="max-w-7xl mx-auto px-4 py-6">
+        <div className="flex gap-2 overflow-x-auto pb-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          {topLevelCategories.map((cat, i) => (
+            <Link key={cat.id} to={`/category/${cat.slug}`} className="shrink-0 flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-card hover:bg-brand-50 hover:text-brand-900 transition">
+              <span className="flex h-7 w-7 items-center justify-center rounded-full bg-brand-50 font-display text-brand-700">{cat.name[lang].charAt(0)}</span>
+              {cat.name[lang]}
+            </Link>
+          ))}
+        </div>
+      </section>
+
       {/* Benefits */}
       <section className="bg-white border-y border-gray-100">
         <div className="max-w-7xl mx-auto px-4 py-6 grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -103,7 +115,7 @@ export default function Home() {
                 <Link to="/category/bio-produkte" className="self-start px-6 py-3 bg-brand-900 text-white rounded-full text-sm font-medium hover:bg-brand-700 transition">{t('common.shopNow')}</Link>
               </div>
               <motion.div className="h-64 md:h-auto overflow-hidden" whileHover={{ scale: 1.03 }} transition={{ duration: 0.6 }}>
-                <img src="https://images.unsplash.com/photo-1488459716781-31db52582fe9?w=900" alt="" className="w-full h-full object-cover" />
+                <img src="/images/site/photo-1488459716781-31db52582fe9.jpg" alt="" className="w-full h-full object-cover" />
               </motion.div>
             </div>
           </div>
@@ -116,6 +128,27 @@ export default function Home() {
       <Section title={t('common.bioRegional')} items={organic} link="/category/bio-produkte" />
       <Section title={t('common.electronics')} items={electronics} link="/category/elektronik" />
       <Section title={t('common.newArrivals')} items={newArrivals} link="/shop" />
+
+      {/* Wallpaper / inspiration */}
+      <section className="relative my-10 overflow-hidden">
+        <div className="absolute inset-0">
+          <img src="/images/site/photo-1488459716781-31db52582fe9.jpg" alt="" className="h-full w-full object-cover" />
+          <div className="absolute inset-0 bg-gradient-to-r from-brand-900/85 via-brand-900/50 to-transparent" />
+        </div>
+        <div className="relative mx-auto max-w-7xl px-4 py-20 md:py-28">
+          <Reveal>
+            <div className="max-w-xl text-white">
+              <div className="mb-3 text-sm font-medium uppercase tracking-[0.2em] text-white/70">{t('common.editorialTitle')}</div>
+              <h2 className="font-display text-3xl md:text-5xl mb-4">{t('common.bioRegionalTitle')}</h2>
+              <p className="mb-6 text-white/80">{t('common.bioRegionalText')}</p>
+              <div className="flex flex-wrap gap-3">
+                <Link to="/category/bio-produkte" className="rounded-full bg-white px-6 py-3 text-sm font-medium text-brand-900 hover:bg-gray-100">{t('common.shopNow')}</Link>
+                <Link to="/magazine" className="rounded-full border border-white/40 px-6 py-3 text-sm font-medium text-white hover:bg-white/10">{t('nav.magazine')}</Link>
+              </div>
+            </div>
+          </Reveal>
+        </div>
+      </section>
 
       {/* Brands */}
       <section className="bg-white py-12 border-y border-gray-100">

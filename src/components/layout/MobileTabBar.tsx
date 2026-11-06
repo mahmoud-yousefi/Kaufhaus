@@ -44,7 +44,7 @@ export default function MobileTabBar() {
                     <span className="absolute -right-0.5 -top-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-red-500 px-1 text-[9px] text-white">{tab.badge}</span>
                   ) : null}
                 </span>
-                <span>{tab.label}</span>
+                <span className="whitespace-nowrap leading-none">{tab.label}</span>
               </>
             )}
           </NavLink>

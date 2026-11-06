@@ -8,7 +8,7 @@ export interface Category {
 }
 
 export const categories: Category[] = [
-  { id: 'food', slug: 'lebensmittel', name: { de: 'Lebensmittel', en: 'Groceries' }, image: 'https://images.unsplash.com/photo-1542838132-92c53300491e?w=800' },
+  { id: 'food', slug: 'lebensmittel', name: { de: 'Lebensmittel', en: 'Groceries' }, image: '/images/site/photo-1542838132-92c53300491e.jpg' },
   { id: 'produce', slug: 'obst-gemuese', name: { de: 'Obst & Gemüse', en: 'Fruit & Vegetables' }, parent: 'food' },
   { id: 'meat', slug: 'fleisch-gefluegel', name: { de: 'Fleisch & Geflügel', en: 'Meat & Poultry' }, parent: 'food' },
   { id: 'beef', slug: 'rindfleisch', name: { de: 'Rindfleisch', en: 'Beef' }, parent: 'meat' },

@@ -7,7 +7,7 @@ export default function About() {
   return (
     <div>
       <section className="relative h-72 md:h-96 overflow-hidden">
-        <img src="https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a?w=1600" alt="" className="w-full h-full object-cover" />
+        <img src="/images/site/photo-1555529669-e69e7aa0ba9a.jpg" alt="" className="w-full h-full object-cover" />
         <div className="absolute inset-0 bg-brand-900/60 flex items-center">
           <div className="max-w-4xl mx-auto px-4 text-white">
             <Reveal>
