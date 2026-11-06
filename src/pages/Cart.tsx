@@ -42,17 +42,19 @@ export default function Cart() {
   return (
     <div className="max-w-7xl mx-auto px-4 py-6">
       <h1 className="font-display text-3xl text-brand-900 mb-6">{t('nav.cart')}</h1>
-      <div className="grid md:grid-cols-[1fr_360px] gap-6">
-        <div className="space-y-3">
+      <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_360px]">
+        <div className="min-w-0 space-y-3">
           {items.map(i => (
-            <div key={i.productId} className="bg-white rounded-2xl p-4 shadow-card flex flex-col sm:flex-row gap-4">
-              <img src={i.product.image} alt="" className="w-20 h-20 rounded-lg object-cover shrink-0" />
-              <div className="flex-1">
-                <Link to={`/product/${i.product.slug}`} className="font-medium hover:text-brand-700">{i.product.name[lang]}</Link>
-                <div className="text-sm text-gray-500">{i.product.brand} · {i.product.unit}</div>
-                <div className="text-brand-900 font-semibold mt-1">{formatPrice(i.product.price, lang)}</div>
+            <div key={i.productId} className="bg-white rounded-2xl p-4 shadow-card flex flex-col gap-3 sm:flex-row sm:gap-4">
+              <div className="flex min-w-0 flex-1 gap-4">
+                <img src={i.product.image} alt="" className="w-20 h-20 rounded-lg object-cover shrink-0" />
+                <div className="min-w-0 flex-1">
+                  <Link to={`/product/${i.product.slug}`} className="font-medium hover:text-brand-700 break-words">{i.product.name[lang]}</Link>
+                  <div className="text-sm text-gray-500">{i.product.brand} · {i.product.unit}</div>
+                  <div className="text-brand-900 font-semibold mt-1">{formatPrice(i.product.price, lang)}</div>
+                </div>
               </div>
-              <div className="flex flex-row sm:flex-col items-center sm:items-end justify-between sm:justify-start gap-2">
+              <div className="flex flex-row items-center justify-between gap-2 border-t border-gray-100 pt-3 sm:flex-col sm:items-end sm:justify-start sm:border-0 sm:pt-0">
                 <button onClick={() => cart.removeItem(i.productId)} className="text-gray-400 hover:text-red-500 shrink-0"><Trash2 size={16} /></button>
                 <div className="flex items-center border rounded-full">
                   <button onClick={() => cart.setQuantity(i.productId, i.quantity - 1)} className="px-3 py-1"><Minus size={14} /></button>
@@ -64,7 +66,7 @@ export default function Cart() {
             </div>
           ))}
         </div>
-        <div className="bg-white rounded-2xl p-6 shadow-card h-fit sticky top-24">
+        <div className="min-w-0 rounded-2xl bg-white p-6 shadow-card h-fit lg:sticky lg:top-24">
           <h2 className="font-semibold mb-4">{t('common.total')}</h2>
           <div className="space-y-2 text-sm">
             <div className="flex justify-between"><span>{t('common.subtotal')}</span><span>{formatPrice(subtotal, lang)}</span></div>
@@ -72,9 +74,9 @@ export default function Cart() {
             {discount > 0 && <div className="flex justify-between text-green-700"><span>{t('common.discount')}</span><span>-{formatPrice(discount, lang)}</span></div>}
             <div className="border-t pt-2 flex justify-between font-semibold text-lg"><span>{t('common.total')}</span><span>{formatPrice(total, lang)}</span></div>
           </div>
-          <div className="mt-4 flex gap-2">
-            <input value={promo} onChange={(e) => setPromo(e.target.value)} placeholder={t('common.promoCode')} className="flex-1 border rounded-lg px-3 py-2 text-sm" />
-            <button onClick={applyPromo} className="px-4 py-2 bg-gray-100 rounded-lg text-sm font-medium hover:bg-gray-200">{t('common.apply')}</button>
+          <div className="mt-4 flex flex-col gap-2 sm:flex-row">
+            <input value={promo} onChange={(e) => setPromo(e.target.value)} placeholder={t('common.promoCode')} className="min-w-0 w-full flex-1 border rounded-lg px-3 py-2 text-sm" />
+            <button onClick={applyPromo} className="w-full shrink-0 px-4 py-2 bg-gray-100 rounded-lg text-sm font-medium hover:bg-gray-200 sm:w-auto">{t('common.apply')}</button>
           </div>
           {cart.promoCode && (
             <div className="mt-2 text-xs text-green-700 flex justify-between">

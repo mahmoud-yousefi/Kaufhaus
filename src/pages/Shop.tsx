@@ -203,7 +203,7 @@ export default function Shop() {
             <div className="py-20 text-center text-gray-500">{t('common.noResults')}</div>
           ) : (
             <>
-              <div className={view === 'grid' ? 'grid grid-cols-2 gap-4 md:grid-cols-3 xl:grid-cols-4' : 'space-y-3'}>
+              <div className={view === 'grid' ? 'grid grid-cols-2 gap-4 lg:grid-cols-3 xl:grid-cols-4' : 'space-y-3'}>
                 {filtered.slice(0, visible).map(p => <ProductCard key={p.id} product={p} />)}
               </div>
               <div ref={sentinelRef} className="h-10" />

@@ -7,7 +7,7 @@ export default function Footer() {
   const { t } = useTranslation()
   const year = new Date().getFullYear()
   return (
-    <footer className="bg-brand-900 text-white mt-16">
+    <footer className="bg-brand-900 text-white mt-16 pb-20 md:pb-0">
       <div className="max-w-7xl mx-auto px-4 py-12 grid md:grid-cols-4 gap-8">
         <div>
           <div className="font-display text-2xl mb-3">Kaufhaus</div>
