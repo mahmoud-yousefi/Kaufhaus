@@ -1,3 +1,4 @@
+import { getLang } from '../lib/lang'
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
@@ -14,7 +15,7 @@ import { assetUrl } from '../lib/assets'
 
 export default function Home() {
   const { t, i18n } = useTranslation()
-  const lang = i18n.language as 'de' | 'en'
+  const lang = getLang(i18n.language)
 
   const bestsellers = products.slice(0, 8)
   const newArrivals = products.slice(8, 16)

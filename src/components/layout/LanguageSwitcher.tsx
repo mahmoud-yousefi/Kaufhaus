@@ -1,3 +1,4 @@
+import { getLang } from '../../lib/lang'
 import React, { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { useTranslation } from 'react-i18next'
@@ -6,7 +7,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 
 export default function LanguageSwitcher() {
   const { i18n } = useTranslation()
-  const lang = i18n.language as 'de' | 'en'
+  const lang = getLang(i18n.language)
   const [open, setOpen] = useState(false)
   const [pos, setPos] = useState({ top: 0, right: 0 })
   const btnRef = useRef<HTMLButtonElement>(null)

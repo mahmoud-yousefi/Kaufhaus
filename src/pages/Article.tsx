@@ -1,3 +1,4 @@
+import { getLang } from '../lib/lang'
 import React from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
@@ -6,7 +7,7 @@ import { articles, getArticleBySlug } from '../data/articles'
 export default function Article() {
   const { slug } = useParams()
   const { t, i18n } = useTranslation()
-  const lang = i18n.language as 'de' | 'en'
+  const lang = getLang(i18n.language)
   const article = getArticleBySlug(slug || '')
   if (!article) return <div className="max-w-7xl mx-auto px-4 py-20 text-center">{t('common.noResults')}</div>
   const related = articles.filter(a => a.slug !== article.slug).slice(0, 3)

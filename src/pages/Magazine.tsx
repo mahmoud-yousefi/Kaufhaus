@@ -1,3 +1,4 @@
+import { getLang } from '../lib/lang'
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
@@ -5,7 +6,7 @@ import { articles } from '../data/articles'
 
 export default function Magazine() {
   const { t, i18n } = useTranslation()
-  const lang = i18n.language as 'de' | 'en'
+  const lang = getLang(i18n.language)
   return (
     <div className="max-w-7xl mx-auto px-4 py-6">
       <h1 className="font-display text-3xl text-brand-900 mb-6">{t('common.editorialTitle')}</h1>

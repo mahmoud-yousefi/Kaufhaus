@@ -1,3 +1,4 @@
+import { getLang } from '../lib/lang'
 import React, { useMemo } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
@@ -9,7 +10,7 @@ import ProductCard from '../components/product/ProductCard'
 export default function Category() {
   const { slug } = useParams()
   const { t, i18n } = useTranslation()
-  const lang = i18n.language as 'de' | 'en'
+  const lang = getLang(i18n.language)
   const cat = getCategoryBySlug(slug || '')
   if (!cat) return <div className="max-w-7xl mx-auto px-4 py-20 text-center">{t('common.noResults')}</div>
 

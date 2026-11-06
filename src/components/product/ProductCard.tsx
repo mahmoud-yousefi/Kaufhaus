@@ -1,3 +1,4 @@
+import { getLang } from '../../lib/lang'
 import React from 'react'
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
@@ -16,7 +17,7 @@ const badgeMap: Record<string, string> = {
 
 export default function ProductCard({ product, compact = false }: { product: Product; compact?: boolean }) {
   const { i18n, t } = useTranslation()
-  const lang = i18n.language as 'de' | 'en'
+  const lang = getLang(i18n.language)
   const cart = useCartStore()
   const wl = useWishlistStore()
   const liked = wl.has(product.id)

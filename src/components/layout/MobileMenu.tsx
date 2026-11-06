@@ -1,3 +1,4 @@
+import { getLang } from '../../lib/lang'
 import React, { useEffect } from 'react'
 import { createPortal } from 'react-dom'
 import { Link } from 'react-router-dom'
@@ -8,7 +9,7 @@ import { topLevelCategories, getChildren } from '../../data/categories'
 
 export default function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
   const { t, i18n } = useTranslation()
-  const lang = i18n.language as 'de' | 'en'
+  const lang = getLang(i18n.language)
 
   useEffect(() => {
     if (!open) return

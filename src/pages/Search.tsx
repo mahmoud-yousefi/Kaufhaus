@@ -1,3 +1,4 @@
+import { getLang } from '../lib/lang'
 import React, { useMemo, useState } from 'react'
 import { useNavigate, useSearchParams, Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
@@ -9,7 +10,7 @@ import { useUIStore } from '../store/uiStore'
 
 export default function Search() {
   const { t, i18n } = useTranslation()
-  const lang = i18n.language as 'de' | 'en'
+  const lang = getLang(i18n.language)
   const [params] = useSearchParams()
   const navigate = useNavigate()
   const ui = useUIStore()

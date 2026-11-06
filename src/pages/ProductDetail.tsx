@@ -1,3 +1,4 @@
+import { getLang } from '../lib/lang'
 import React, { useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
@@ -14,7 +15,7 @@ import { toast } from 'sonner'
 export default function ProductDetail() {
   const { slug } = useParams()
   const { t, i18n } = useTranslation()
-  const lang = i18n.language as 'de' | 'en'
+  const lang = getLang(i18n.language)
   const product = getProductBySlug(slug || '')
   const cart = useCartStore()
   const wl = useWishlistStore()

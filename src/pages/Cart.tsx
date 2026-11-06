@@ -1,3 +1,4 @@
+import { getLang } from '../lib/lang'
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
@@ -9,7 +10,7 @@ import { toast } from 'sonner'
 
 export default function Cart() {
   const { t, i18n } = useTranslation()
-  const lang = i18n.language as 'de' | 'en'
+  const lang = getLang(i18n.language)
   const cart = useCartStore()
   const [promo, setPromo] = useState('')
   const items = cart.items.map(i => ({ ...i, product: products.find(p => p.id === i.productId)! })).filter(i => i.product)
