@@ -201,9 +201,9 @@ export default function Home() {
           <Reveal>
             <h2 className="font-display text-3xl mb-3">{t('common.newsletter')}</h2>
             <p className="text-white/80 mb-6">{t('common.newsletterText')}</p>
-            <form className="flex gap-2 max-w-md mx-auto" onSubmit={(e) => e.preventDefault()}>
-              <input type="email" placeholder={t('common.email')} className="flex-1 px-4 py-3 rounded-full text-gray-900 outline-none" />
-              <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }} className="px-6 py-3 bg-accent-500 rounded-full font-medium hover:bg-accent-600 transition">{t('common.subscribe')}</motion.button>
+            <form className="flex flex-col sm:flex-row gap-2 max-w-md mx-auto" onSubmit={(e) => e.preventDefault()}>
+              <input type="email" placeholder={t('common.email')} className="min-w-0 w-full flex-1 px-4 py-3 rounded-full text-gray-900 outline-none" />
+              <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.97 }} className="w-full shrink-0 px-6 py-3 bg-accent-500 rounded-full font-medium hover:bg-accent-600 transition sm:w-auto">{t('common.subscribe')}</motion.button>
             </form>
           </Reveal>
         </div>

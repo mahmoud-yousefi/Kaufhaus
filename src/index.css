@@ -25,6 +25,10 @@ body {
     radial-gradient(circle at 92% 4%, rgba(181,147,108,.10), transparent 26%),
     radial-gradient(circle at 50% 100%, rgba(47,111,94,.04), transparent 30%);
   background-attachment: fixed;
+  /* Safety net: decorative transforms and full-bleed art must never create a
+     horizontal page scroll on small screens. `clip` avoids a scroll container,
+     so sticky/fixed elements keep working. */
+  overflow-x: clip;
 }
 .font-display { font-family: 'Fraunces', Georgia, serif; }
 
