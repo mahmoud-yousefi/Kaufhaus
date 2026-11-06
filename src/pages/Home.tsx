@@ -10,6 +10,7 @@ import Reveal from '../components/common/Reveal'
 import HeroSlider from '../components/common/HeroSlider'
 import DealBanner from '../components/common/DealBanner'
 import MarqueeStrip from '../components/common/MarqueeStrip'
+import { assetUrl } from '../lib/assets'
 
 export default function Home() {
   const { t, i18n } = useTranslation()
@@ -115,7 +116,7 @@ export default function Home() {
                 <Link to="/category/bio-produkte" className="self-start px-6 py-3 bg-brand-900 text-white rounded-full text-sm font-medium hover:bg-brand-700 transition">{t('common.shopNow')}</Link>
               </div>
               <motion.div className="h-64 md:h-auto overflow-hidden" whileHover={{ scale: 1.03 }} transition={{ duration: 0.6 }}>
-                <img src="/images/site/photo-1488459716781-31db52582fe9.jpg" alt="" className="w-full h-full object-cover" />
+                <img src={assetUrl('/images/site/photo-1488459716781-31db52582fe9.jpg')} alt="" className="w-full h-full object-cover" />
               </motion.div>
             </div>
           </div>
@@ -132,7 +133,7 @@ export default function Home() {
       {/* Wallpaper / inspiration */}
       <section className="relative my-10 overflow-hidden">
         <div className="absolute inset-0">
-          <img src="/images/site/photo-1488459716781-31db52582fe9.jpg" alt="" className="h-full w-full object-cover" />
+          <img src={assetUrl('/images/site/photo-1488459716781-31db52582fe9.jpg')} alt="" className="h-full w-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-r from-brand-900/85 via-brand-900/50 to-transparent" />
         </div>
         <div className="relative mx-auto max-w-7xl px-4 py-20 md:py-28">

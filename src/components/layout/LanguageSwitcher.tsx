@@ -52,9 +52,9 @@ export default function LanguageSwitcher() {
         aria-expanded={open}
         className="flex items-center gap-1 px-2 py-1.5 text-sm font-medium rounded-full hover:bg-gray-100 transition-colors sm:gap-1.5 sm:px-2.5 sm:py-2"
       >
-        <Globe size={18} />
-        <span className="hidden sm:inline">{lang.toUpperCase()}</span>
-        <ChevronDown size={14} className={`transition-transform ${open ? 'rotate-180' : ''}`} />
+        <Globe size={16} className="sm:h-[18px] sm:w-[18px]" />
+        <span className="text-xs sm:text-sm">{lang.toUpperCase()}</span>
+        <ChevronDown size={14} className={`hidden transition-transform sm:block ${open ? 'rotate-180' : ''}`} />
       </button>
       {createPortal(
         <AnimatePresence>

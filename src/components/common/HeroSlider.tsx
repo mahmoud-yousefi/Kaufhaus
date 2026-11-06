@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ArrowRight, Star } from 'lucide-react'
+import { assetUrl } from '../../lib/assets'
 
 const slides = [
   { img: '/images/site/photo-1542838132-92c53300491e.jpg', title: 'heroSlide1Title', text: 'heroSlide1Text', accent: false },
@@ -34,7 +35,7 @@ export default function HeroSlider() {
           exit={{ opacity: 0 }}
           transition={{ duration: 1.2, ease: 'easeOut' }}
         >
-          <img src={slide.img} alt="" className="h-full w-full object-cover" />
+          <img src={assetUrl(slide.img)} alt="" className="h-full w-full object-cover" />
         </motion.div>
       </AnimatePresence>
       <div className="absolute inset-0 bg-gradient-to-r from-brand-900/95 via-brand-900/65 to-transparent" />

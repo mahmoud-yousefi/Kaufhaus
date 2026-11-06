@@ -1,3 +1,5 @@
+import { assetUrl } from '../lib/assets'
+
 export interface Category {
   id: string
   slug: string
@@ -50,6 +52,8 @@ export const categories: Category[] = [
   { id: 'garden', slug: 'garten-balkon', name: { de: 'Garten & Balkon', en: 'Garden & Balcony' } },
   { id: 'seasonal', slug: 'saisonale-produkte', name: { de: 'Saisonale Produkte', en: 'Seasonal Products' } },
 ]
+
+for (const c of categories) if (c.image) c.image = assetUrl(c.image)
 
 export const topLevelCategories = categories.filter(c => !c.parent)
 export function getCategoryBySlug(slug: string) { return categories.find(c => c.slug === slug) }

@@ -1,3 +1,5 @@
+import { assetUrl } from '../lib/assets'
+
 export interface Article {
   slug: string
   title: { de: string; en: string }
@@ -131,5 +133,7 @@ export const articles: Article[] = [
     publishedAt: '2026-02-14',
   },
 ]
+
+for (const a of articles) a.image = assetUrl(a.image)
 
 export function getArticleBySlug(slug: string) { return articles.find(a => a.slug === slug) }

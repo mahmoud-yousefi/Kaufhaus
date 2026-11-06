@@ -1,4 +1,5 @@
 import { productsMore } from './productsMore'
+import { assetUrl } from '../lib/assets'
 
 export interface Product {
   id: string
@@ -180,6 +181,12 @@ const merged: Product[] = [...baseProducts, ...productsMore].map((p, i) => {
 })
 
 export const products: Product[] = merged
+
+// Prefix public-asset paths with Vite base URL so images resolve under /Kaufhaus/ in dev and prod.
+for (const p of products) {
+  p.image = assetUrl(p.image)
+  if (p.images) p.images = p.images.map(assetUrl)
+}
 
 export function getProductBySlug(slug: string) { return products.find(p => p.slug === slug) }
 export function getProductById(id: string) { return products.find(p => p.id === id) }

@@ -7,7 +7,6 @@ import { products } from '../../data/products'
 import { useCartStore } from '../../store/cartStore'
 import { useWishlistStore } from '../../store/wishlistStore'
 import { useUIStore } from '../../store/uiStore'
-import { formatPrice } from '../../lib/utils'
 import LanguageSwitcher from './LanguageSwitcher'
 import MobileMenu from './MobileMenu'
 
@@ -70,8 +69,6 @@ export default function Header() {
     megaTimer.current = window.setTimeout(() => setActiveCat(null), 120)
   }
 
-  const activeCategory = activeCat ? categories.find(c => c.id === activeCat) : null
-
   return (
     <header className="sticky top-0 z-[100] border-b border-gray-100 bg-white/95 backdrop-blur">
       <div className="bg-brand-900 text-white">
@@ -85,17 +82,17 @@ export default function Header() {
         </div>
       </div>
 
-      <div className="mx-auto flex max-w-7xl items-center gap-3 px-4 py-3">
-        <button className="rounded-full p-2 hover:bg-gray-100 md:hidden" onClick={() => setMobileOpen(true)} aria-label="Menü öffnen">
+      <div className="mx-auto flex max-w-7xl flex-wrap items-center gap-2 px-4 py-2.5 lg:flex-nowrap lg:gap-3 lg:py-3">
+        <button className="rounded-full p-2 hover:bg-gray-100 lg:hidden" onClick={() => setMobileOpen(true)} aria-label="Menü öffnen">
           <Menu size={22} />
         </button>
 
         <Link to="/" className="flex shrink-0 items-center gap-2" aria-label="Kaufhaus Startseite">
           <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-brand-900 font-display text-base text-white sm:h-9 sm:w-9 sm:text-lg">K</div>
-          <span className="hidden font-display text-xl font-semibold text-brand-900 sm:block">Kaufhaus</span>
+          <span className="block whitespace-nowrap font-display text-lg font-semibold text-brand-900 sm:text-xl">Kaufhaus</span>
         </Link>
 
-        <div ref={searchRef} className="relative w-full max-w-2xl flex-1">
+        <div ref={searchRef} className="relative order-last w-full lg:order-none lg:w-full lg:max-w-2xl lg:flex-1">
           <div className="flex items-center rounded-full bg-gray-100 px-3 py-2 ring-1 ring-transparent transition focus-within:bg-white focus-within:ring-brand-300 sm:px-4">
             <Search size={16} className="text-gray-400 sm:h-[18px] sm:w-[18px]" />
             <input
@@ -167,13 +164,13 @@ export default function Header() {
           )}
         </div>
 
-        <div className="flex items-center gap-0.5 sm:gap-1">
+        <div className="ml-auto flex items-center gap-0.5 sm:gap-1 lg:ml-0">
           <LanguageSwitcher />
-          <Link to="/wishlist" aria-label={t('nav.wishlist')} className="relative rounded-full p-1.5 hover:bg-gray-100 sm:p-2">
+          <Link to="/wishlist" aria-label={t('nav.wishlist')} className="relative hidden rounded-full p-1.5 hover:bg-gray-100 sm:inline-flex sm:p-2">
             <Heart size={18} className="sm:h-5 sm:w-5" />
             {wlCount > 0 && <span className="absolute -right-0.5 -top-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-red-500 px-1 text-[10px] text-white sm:h-5 sm:min-w-5 sm:text-xs">{wlCount}</span>}
           </Link>
-          <Link to="/cart" aria-label={t('nav.cart')} className="relative rounded-full p-1.5 hover:bg-gray-100 sm:p-2">
+          <Link to="/cart" aria-label={t('nav.cart')} className="relative hidden rounded-full p-1.5 hover:bg-gray-100 sm:inline-flex sm:p-2">
             <ShoppingCart size={18} className="sm:h-5 sm:w-5" />
             {cartCount > 0 && <span className="absolute -right-0.5 -top-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-brand-900 px-1 text-[10px] text-white sm:h-5 sm:min-w-5 sm:text-xs">{cartCount}</span>}
           </Link>
@@ -181,64 +178,59 @@ export default function Header() {
       </div>
 
       {/* Desktop mega menu */}
-      <nav className="hidden border-t border-gray-100 md:block">
-        <div className="mx-auto flex max-w-7xl items-center gap-0.5 px-4">
-          {topLevelCategories.slice(0, 8).map(cat => (
-            <div key={cat.id} className="relative" onMouseEnter={() => openMega(cat.id)} onMouseLeave={closeMega}>
-              <Link
-                to={`/category/${cat.slug}`}
-                className={`flex items-center gap-1 px-3 py-3 text-sm font-medium transition-colors hover:text-brand-700 ${activeCat === cat.id ? 'text-brand-700' : ''}`}
-                onFocus={() => openMega(cat.id)}
-              >
-                {cat.name[lang]} <ChevronDown size={14} className="opacity-40" />
-              </Link>
-            </div>
-          ))}
-          <Link to="/shop" className="px-3 py-3 text-sm font-medium hover:text-brand-700">{t('nav.shop')}</Link>
-          <Link to="/offers" className="px-3 py-3 text-sm font-medium text-red-600">{t('nav.offers')}</Link>
-          <Link to="/magazine" className="px-3 py-3 text-sm font-medium hover:text-brand-700">{t('nav.magazine')}</Link>
-          <Link to="/about" className="px-3 py-3 text-sm font-medium hover:text-brand-700">{t('nav.about')}</Link>
+      <nav className="hidden border-t border-gray-100 lg:block">
+        <div className="mx-auto flex max-w-7xl items-center gap-1 px-4">
+          <div className="relative" onMouseEnter={() => openMega('all')} onMouseLeave={closeMega}>
+            <button
+              onClick={() => setActiveCat(v => (v === 'all' ? null : 'all'))}
+              aria-expanded={activeCat === 'all'}
+              className={`flex items-center gap-1 whitespace-nowrap px-3 py-3 text-sm font-medium transition-colors hover:text-brand-700 ${activeCat === 'all' ? 'text-brand-700' : ''}`}
+            >
+              {t('nav.allCategories')}
+              <ChevronDown size={14} className={`opacity-40 transition-transform ${activeCat === 'all' ? 'rotate-180' : ''}`} />
+            </button>
+          </div>
+          <Link to="/shop" className="shrink-0 whitespace-nowrap px-3 py-3 text-sm font-medium hover:text-brand-700">{t('nav.shop')}</Link>
+          <Link to="/offers" className="shrink-0 whitespace-nowrap px-3 py-3 text-sm font-medium text-red-600">{t('nav.offers')}</Link>
+          <Link to="/magazine" className="shrink-0 whitespace-nowrap px-3 py-3 text-sm font-medium hover:text-brand-700">{t('nav.magazine')}</Link>
+          <Link to="/about" className="shrink-0 whitespace-nowrap px-3 py-3 text-sm font-medium hover:text-brand-700">{t('nav.about')}</Link>
         </div>
       </nav>
 
-      {activeCategory && (
+      {activeCat === 'all' && (
         <div
-          className="absolute left-0 right-0 top-full z-[120] hidden border-t border-gray-100 bg-white shadow-lift md:block"
-          onMouseEnter={() => openMega(activeCategory.id)}
+          className="absolute left-0 right-0 top-full z-[120] hidden border-t border-gray-100 bg-white shadow-lift lg:block"
+          onMouseEnter={() => openMega('all')}
           onMouseLeave={closeMega}
         >
-          <div className="mx-auto grid max-w-7xl grid-cols-4 gap-8 px-4 py-8">
-            <div className="col-span-2">
-              <div className="mb-4 flex items-center justify-between">
-                <div className="font-display text-xl text-brand-900">{activeCategory.name[lang]}</div>
-                <Link to={`/category/${activeCategory.slug}`} className="text-sm text-brand-700 hover:underline">{t('common.showAll')}</Link>
-              </div>
-              <div className="grid grid-cols-2 gap-1">
-                {getChildren(activeCategory.id).map(sub => (
-                  <Link key={sub.id} to={`/category/${sub.slug}`} className="block rounded-lg px-3 py-2 text-sm hover:bg-gray-50 hover:text-brand-700">
-                    {sub.name[lang]}
-                  </Link>
-                ))}
-                {getChildren(activeCategory.id).length === 0 && (
-                  <Link to={`/category/${activeCategory.slug}`} className="block rounded-lg px-3 py-2 text-sm hover:bg-gray-50 hover:text-brand-700">
-                    {t('common.showAll')} {activeCategory.name[lang]}
-                  </Link>
-                )}
-              </div>
+          <div className="mx-auto max-w-7xl px-4 py-8">
+            <div className="mb-5 flex items-center justify-between">
+              <div className="font-display text-xl text-brand-900">{t('nav.allCategories')}</div>
+              <Link to="/shop" className="text-sm text-brand-700 hover:underline">{t('common.showAll')}</Link>
             </div>
-            <div className="col-span-2">
-              <div className="mb-3 text-xs uppercase tracking-wide text-gray-400">{t('common.bestsellers')}</div>
-              <div className="grid grid-cols-3 gap-3">
-                {products.filter(p => p.category === activeCategory.id || getChildren(activeCategory.id).some(c => c.id === p.category)).slice(0, 3).map(p => (
-                  <Link key={p.id} to={`/product/${p.slug}`} className="group overflow-hidden rounded-xl border border-gray-100 hover:shadow-card">
-                    <img src={p.image} alt="" className="h-24 w-full object-cover transition-transform group-hover:scale-105" />
-                    <div className="p-2">
-                      <div className="line-clamp-1 text-xs font-medium">{p.name[lang]}</div>
-                      <div className="text-xs font-semibold text-brand-700">{formatPrice(p.price, lang)}</div>
+            <div className="grid grid-cols-2 gap-x-8 gap-y-6 md:grid-cols-3 xl:grid-cols-5">
+              {topLevelCategories.map(cat => {
+                const children = getChildren(cat.id)
+                return (
+                  <div key={cat.id}>
+                    <Link to={`/category/${cat.slug}`} className="mb-2 block font-display text-sm font-semibold text-brand-900 hover:text-brand-700">
+                      {cat.name[lang]}
+                    </Link>
+                    <div className="space-y-1">
+                      {children.slice(0, 5).map(sub => (
+                        <Link key={sub.id} to={`/category/${sub.slug}`} className="block text-sm text-gray-600 hover:text-brand-700">
+                          {sub.name[lang]}
+                        </Link>
+                      ))}
+                      {children.length === 0 && (
+                        <Link to={`/category/${cat.slug}`} className="block text-sm text-gray-600 hover:text-brand-700">
+                          {t('common.showAll')}
+                        </Link>
+                      )}
                     </div>
-                  </Link>
-                ))}
-              </div>
+                  </div>
+                )
+              })}
             </div>
           </div>
         </div>
