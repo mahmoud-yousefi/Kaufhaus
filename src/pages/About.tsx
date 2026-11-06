@@ -1,24 +1,61 @@
 import React from 'react'
 import { useTranslation } from 'react-i18next'
+import { motion } from 'framer-motion'
+import Reveal from '../components/common/Reveal'
 
 export default function About() {
-  const { t, i18n } = useTranslation()
-  const lang = i18n.language as 'de' | 'en'
   return (
-    <div className="max-w-4xl mx-auto px-4 py-10">
-      <h1 className="font-display text-4xl text-brand-900 mb-6">Über Kaufhaus</h1>
-      <img src="https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a?w=1200" alt="" className="w-full h-64 object-cover rounded-2xl mb-6" />
-      <div className="prose text-gray-700 leading-relaxed space-y-4">
-        <p>Kaufhaus ist Ihr Premium-Kaufhaus für Lebensmittel, Mode, Elektronik und mehr. Wir verbinden die Tradition eines deutschen Warenhauses mit modernem Online-Shopping.</p>
-        <p>Unsere Mission: Qualität, Vielfalt und Zuverlässigkeit für jeden Haushalt in Deutschland und Europa. Wir setzen auf regionale Partner, nachhaltige Lieferketten und frische Produkte.</p>
-        <p>Mit über 150 sorgfältig ausgewählten Produkten, einem Magazin voller Inspiration und einem Service, der überzeugt, möchten wir Ihr vertrauensvoller Begleiter im Alltag sein.</p>
-        <h2 className="font-display text-2xl text-brand-900 mt-6">Unsere Werte</h2>
-        <ul className="list-disc pl-6 space-y-1">
-          <li>Qualität und Frische</li>
-          <li>Nachhaltigkeit und Verantwortung</li>
-          <li>Kundenzufriedenheit</li>
-          <li>Transparenz und Fairness</li>
-        </ul>
+    <div>
+      <section className="relative h-72 md:h-96 overflow-hidden">
+        <img src="https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a?w=1600" alt="" className="w-full h-full object-cover" />
+        <div className="absolute inset-0 bg-brand-900/60 flex items-center">
+          <div className="max-w-4xl mx-auto px-4 text-white">
+            <Reveal>
+              <h1 className="font-display text-5xl md:text-6xl mb-3">Über Kaufhaus</h1>
+              <p className="text-lg text-white/80 max-w-2xl">Ihr Premium-Kaufhaus für Lebensmittel, Mode, Elektronik und mehr — mit Lieferservice in ganz Deutschland.</p>
+            </Reveal>
+          </div>
+        </div>
+      </section>
+      <div className="max-w-4xl mx-auto px-4 py-12 space-y-12">
+        <Reveal>
+          <section>
+            <h2 className="font-display text-3xl text-brand-900 mb-4">Unsere Geschichte</h2>
+            <p className="text-gray-700 leading-relaxed">Kaufhaus verbindet die Tradition eines deutschen Warenhauses mit modernem Online-Shopping. Seit Jahren stehen Qualität, Vielfalt und Zuverlässigkeit im Mittelpunkt unseres Handelns. Wir setzen auf regionale Partner, nachhaltige Lieferketten und frische Produkte.</p>
+          </section>
+        </Reveal>
+        <Reveal>
+          <section className="grid md:grid-cols-3 gap-6">
+            {[
+              { title: 'Qualität', text: 'Sorgfältig ausgewählte Produkte mit hohen Standards.' },
+              { title: 'Nachhaltigkeit', text: 'Regionale Partner und verantwortungsvolle Lieferketten.' },
+              { title: 'Service', text: 'Schnelle Lieferung und zuverlässiger Kundenservice.' },
+            ].map((v, i) => (
+              <motion.div key={i} whileHover={{ y: -6 }} className="bg-white rounded-2xl p-6 shadow-card">
+                <h3 className="font-display text-xl text-brand-900 mb-2">{v.title}</h3>
+                <p className="text-gray-600 text-sm">{v.text}</p>
+              </motion.div>
+            ))}
+          </section>
+        </Reveal>
+        <Reveal>
+          <section>
+            <h2 className="font-display text-3xl text-brand-900 mb-4">Zahlen & Fakten</h2>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              {[
+                { n: '150+', l: 'Produkte' },
+                { n: '30+', l: 'Kategorien' },
+                { n: '4.8', l: 'Bewertung' },
+                { n: '24/7', l: 'Service' },
+              ].map((s, i) => (
+                <div key={i} className="text-center bg-white rounded-2xl p-6 shadow-card">
+                  <div className="font-display text-3xl text-brand-900">{s.n}</div>
+                  <div className="text-sm text-gray-500">{s.l}</div>
+                </div>
+              ))}
+            </div>
+          </section>
+        </Reveal>
       </div>
     </div>
   )

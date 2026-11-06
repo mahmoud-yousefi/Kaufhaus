@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 import { Link, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { Search, ShoppingCart, Heart, Menu, X, ChevronDown, Globe } from 'lucide-react'
@@ -186,10 +187,22 @@ export default function Header() {
         </div>
       </nav>
       {/* Mobile drawer */}
+      <AnimatePresence>
       {mobileOpen && (
-        <div className="fixed inset-0 z-50 md:hidden">
-          <div className="absolute inset-0 bg-black/40" onClick={() => setMobileOpen(false)} />
-          <div className="absolute left-0 top-0 bottom-0 w-80 bg-white overflow-y-auto p-4">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 z-[200] md:hidden"
+        >
+          <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={() => setMobileOpen(false)} />
+          <motion.div
+            initial={{ x: -320 }}
+            animate={{ x: 0 }}
+            exit={{ x: -320 }}
+            transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+            className="absolute left-0 top-0 bottom-0 w-80 max-w-[85vw] bg-white overflow-y-auto p-4 shadow-2xl"
+          >
             <div className="flex justify-between items-center mb-4">
               <span className="font-display text-xl">Kaufhaus</span>
               <button onClick={() => setMobileOpen(false)}><X /></button>
@@ -209,9 +222,10 @@ export default function Header() {
               <Link to="/about" onClick={() => setMobileOpen(false)} className="block px-3 py-2 font-medium">{t('nav.about')}</Link>
               <Link to="/contact" onClick={() => setMobileOpen(false)} className="block px-3 py-2 font-medium">{t('nav.contact')}</Link>
             </div>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       )}
+      </AnimatePresence>
     </header>
   )
 }

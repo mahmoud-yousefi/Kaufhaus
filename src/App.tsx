@@ -1,5 +1,6 @@
 import { lazy, Suspense } from 'react'
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, useLocation } from 'react-router-dom'
+import { AnimatePresence, motion } from 'framer-motion'
 import Layout from './components/layout/Layout'
 import { Toaster } from 'sonner'
 
@@ -23,26 +24,37 @@ function Fallback() {
 }
 
 export default function App() {
+  const location = useLocation()
   return (
     <>
       <Layout>
         <Suspense fallback={<Fallback />}>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/shop" element={<Shop />} />
-            <Route path="/category/:slug" element={<Category />} />
-            <Route path="/product/:slug" element={<ProductDetail />} />
-            <Route path="/search" element={<Search />} />
-            <Route path="/offers" element={<Offers />} />
-            <Route path="/cart" element={<Cart />} />
-            <Route path="/wishlist" element={<Wishlist />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/magazine" element={<Magazine />} />
-            <Route path="/magazine/:slug" element={<Article />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/faq" element={<FAQ />} />
-            <Route path="/legal/:slug" element={<Legal />} />
-          </Routes>
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={location.pathname}
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.25, ease: 'easeOut' }}
+            >
+              <Routes location={location}>
+                <Route path="/" element={<Home />} />
+                <Route path="/shop" element={<Shop />} />
+                <Route path="/category/:slug" element={<Category />} />
+                <Route path="/product/:slug" element={<ProductDetail />} />
+                <Route path="/search" element={<Search />} />
+                <Route path="/offers" element={<Offers />} />
+                <Route path="/cart" element={<Cart />} />
+                <Route path="/wishlist" element={<Wishlist />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/magazine" element={<Magazine />} />
+                <Route path="/magazine/:slug" element={<Article />} />
+                <Route path="/contact" element={<Contact />} />
+                <Route path="/faq" element={<FAQ />} />
+                <Route path="/legal/:slug" element={<Legal />} />
+              </Routes>
+            </motion.div>
+          </AnimatePresence>
         </Suspense>
       </Layout>
       <Toaster position="top-right" richColors />

@@ -1,4 +1,5 @@
 import React from 'react'
+import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { Heart, ShoppingCart, Star } from 'lucide-react'
@@ -20,7 +21,7 @@ export default function ProductCard({ product, compact = false }: { product: Pro
   const liked = wl.has(product.id)
 
   return (
-    <div className="group bg-white rounded-2xl overflow-hidden shadow-card hover:shadow-lift transition-all duration-300 flex flex-col">
+    <motion.div whileHover={{ y: -6 }} transition={{ duration: 0.25 }} className="group bg-white rounded-2xl overflow-hidden shadow-card hover:shadow-lift transition-all duration-300 flex flex-col">
       <Link to={`/product/${product.slug}`} className="relative block overflow-hidden bg-gray-50">
         <img
           src={product.image}
@@ -77,6 +78,6 @@ export default function ProductCard({ product, compact = false }: { product: Pro
         {product.stock === 0 && <div className="text-xs text-red-500 mt-2">{t('common.outOfStock')}</div>}
         {product.stock > 0 && product.stock < 10 && <div className="text-xs text-amber-600 mt-2">{t('common.lowStock')}</div>}
       </div>
-    </div>
+    </motion.div>
   )
 }
